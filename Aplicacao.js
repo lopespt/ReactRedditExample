@@ -6,7 +6,7 @@ export default class Aplicacao extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            forum: ""
+            forum: "reactjs"
         }
 
     }
