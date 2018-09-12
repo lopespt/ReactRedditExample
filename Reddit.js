@@ -1,6 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
+import Post from "./Post.js"
 export default class Reddit extends React.Component{
 
     constructor(props){
@@ -13,6 +12,10 @@ export default class Reddit extends React.Component{
         this.atualizaReddit(this.props.forum);
         
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({conteudo: {}});
+        this.atualizaReddit(nextProps.forum);        
+      }
 
     atualizaReddit(nomeForum){
         fetch(`https://www.reddit.com/r/${nomeForum}.json`)
@@ -28,10 +31,9 @@ export default class Reddit extends React.Component{
                 console.log(res);
                 this.setState({conteudo: res});
             }
-        ).catch( err => console.log(err));
+        ).catch( err => console.log("forum não encontrado"));
+        
     }
-
-
     render(){
         if(!this.state.conteudo.data){
             return "Sem informações";
@@ -39,9 +41,8 @@ export default class Reddit extends React.Component{
        else
         return (
             <div>
-            {this.state.conteudo.data.children.forEach( (child, num)=>{
-                        //console.log(child.data.author);
-                        return <a key={num}>x</a>
+            {this.state.conteudo.data.children.map( (child, num)=>{
+                        return <Post post={child.data} key={num}></Post>
                     }
                  )
             }

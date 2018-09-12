@@ -3,8 +3,15 @@ import Input from "./Input.js";
 import Reddit from "./Reddit.js";
 
 export default class Aplicacao extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            forum: ""
+        }
+
+    }
     trataEnter(texto){
-        
+        this.setState({forum: texto});
     }    
     render(){
         return (
@@ -14,7 +21,7 @@ export default class Aplicacao extends React.Component{
                     </Input>
                 </div>
                 <div>
-                    <Reddit forum="reactjs"></Reddit>
+                    <Reddit forum={this.state.forum}></Reddit>
                 </div>
             </div>
         )
